@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Kalender Indonesia</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+
+        <header class="header">
+            <div class="header-top">
+                <div>
+                    <div class="header-brand-title">Kalender 🇮🇩</div>
+                    <div class="header-brand-sub">Libur Nasional & Acara</div>
+                </div>
+                <button class="header-today-btn" id="todayBtn">Hari Ini</button>
+            </div>
+
+
+            <div class="month-nav">
+                <button class="month-nav-btn" id="prevMonthBtn" aria-label="Bulan sebelumnya">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+                <div class="month-nav-center">
+                    <div class="month-label" id="monthLabel">—</div>
+                    <div class="year-input-wrap">
+                        <input type="number" class="year-input" id="yearInput" min="1900" max="2100" aria-label="Tahun" />
+                        <button class="year-go-btn" id="goYearBtn">GO</button>
+                    </div>
+                </div>
+                <button class="month-nav-btn" id="nextMonthBtn" aria-label="Bulan berikutnya">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+            </div>
+        </header>
+
+
+        <div class="filter-row">
+            <div class="filter-pill on-holiday" id="pillHoliday" role="button" tabindex="0">
+                <span class="pdot"></span> Libur Nasional
+            </div>
+            <div class="filter-pill on-event" id="pillEvent" role="button" tabindex="0">
+                <span class="pdot"></span> Acara Saya
+            </div>
+        </div>
+
+
+        <div class="calendar-wrap" role="grid" aria-label="Kalender">
+            <div class="day-headers" id="dayHeaders"></div>
+            <div class="calendar-grid" id="calendarGrid" style="touch-action: pan-y;"></div>
+        </div>
+
+
+        <div class="info-panel hidden" id="infoPanel" aria-live="polite"></div>
+
+
+        <footer class="app-footer" id="appFooter"></footer>
+
+    </div>
+
+
+    <div class="bottom-area">
+        <div class="bottom-bar">
+            <button class="bb-btn" id="bbThemeBtn" title="Tema Warna">
+      <svg viewBox="0 0 24 24"><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3Z"/></svg>
+      Tema
+    </button>
+            <button class="bb-add" id="bbAddBtn" title="Tambah Acara" aria-label="Tambah Acara">
+      <svg viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
+    </button>
+            <button class="bb-btn" id="bbListBtn" title="Daftar Acara">
+      <svg viewBox="0 0 24 24"><path d="M9,5V9H21V5M9,19H21V15H9M9,14H21V10H9M4,9H8V5H4M4,19H8V15H4M4,14H8V10H4V14Z"/></svg>
+      Acara
+    </button>
+        </div>
+    </div>
+
+
+    <div class="modal-overlay" id="eventModal" role="dialog" aria-modal="true" aria-labelledby="eventModalTitle">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-header">
+                <span class="modal-title" id="eventModalTitle">Tambah Acara</span>
+                <button class="modal-close" data-close="eventModal" aria-label="Tutup">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm" novalidate>
+                    <div class="form-group">
+                        <label class="form-label" for="evDate">Tanggal</label>
+                        <input type="date" class="form-input" id="evDate" required />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="evTime">Waktu <span style="opacity:.5;font-weight:500">(opsional)</span></label>
+                            <input type="time" class="form-input" id="evTime" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="evTitle">Judul</label>
+                            <input type="text" class="form-input" id="evTitle" placeholder="Nama acara..." required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="evDesc">Catatan <span style="opacity:.5;font-weight:500">(opsional)</span></label>
+                        <textarea class="form-textarea" id="evDesc" placeholder="Detail tambahan..."></textarea>
+                    </div>
+                    <div class="form-toggle-row off" id="reminderRow">
+                        <div>
+                            <div class="form-toggle-label">🔔 Aktifkan Pengingat</div>
+                            <div class="form-toggle-hint">Perlu isi waktu terlebih dahulu</div>
+                        </div>
+                        <label class="toggle">
+            <input type="checkbox" id="evReminder" />
+            <span class="ttrack"></span>
+            <span class="tthumb"></span>
+          </label>
+                    </div>
+                    <button type="submit" class="btn-primary">Simpan Acara</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-overlay" id="themeModal" role="dialog" aria-modal="true" aria-labelledby="themeModalTitle">
+        <div class="modal-center">
+            <div class="modal-header" style="border:none;padding:0 0 16px;">
+                <span class="modal-title" id="themeModalTitle">Pilih Tema</span>
+                <button class="modal-close" data-close="themeModal" aria-label="Tutup">&times;</button>
+            </div>
+            <div class="theme-grid" id="themeGrid">
+                <div class="theme-opt sel" data-theme="blue">
+                    <div class="theme-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+                    <div class="theme-swatch" style="background:linear-gradient(135deg,#4f8ef7,#7aadff)"></div>
+                    <span>Biru</span>
+                </div>
+                <div class="theme-opt" data-theme="green">
+                    <div class="theme-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+                    <div class="theme-swatch" style="background:linear-gradient(135deg,#22c55e,#4ade80)"></div>
+                    <span>Hijau</span>
+                </div>
+                <div class="theme-opt" data-theme="purple">
+                    <div class="theme-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+                    <div class="theme-swatch" style="background:linear-gradient(135deg,#a855f7,#c084fc)"></div>
+                    <span>Ungu</span>
+                </div>
+                <div class="theme-opt" data-theme="rose">
+                    <div class="theme-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+                    <div class="theme-swatch" style="background:linear-gradient(135deg,#f43f5e,#fb7185)"></div>
+                    <span>Merah</span>
+                </div>
+                <div class="theme-opt" data-theme="amber">
+                    <div class="theme-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+                    <div class="theme-swatch" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)"></div>
+                    <span>Kuning</span>
+                </div>
+                <div class="theme-opt" data-theme="teal">
+                    <div class="theme-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+                    <div class="theme-swatch" style="background:linear-gradient(135deg,#14b8a6,#2dd4bf)"></div>
+                    <span>Teal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-overlay" id="listModal" role="dialog" aria-modal="true" aria-labelledby="listModalTitle">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-header">
+                <span class="modal-title" id="listModalTitle">Acara Saya</span>
+                <button class="modal-close" data-close="listModal" aria-label="Tutup">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="eventListWrap"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-overlay" id="confirmModal" role="alertdialog" aria-modal="true">
+        <div class="modal-center">
+            <div class="confirm-icon">
+                <svg viewBox="0 0 24 24"><path d="M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/></svg>
+            </div>
+            <div class="confirm-heading">Hapus Acara?</div>
+            <div class="confirm-text" id="confirmText">Aksi ini tidak bisa dibatalkan.</div>
+            <div class="confirm-btns">
+                <button class="btn-cancel" id="confirmNo">Batal</button>
+                <button class="btn-del" id="confirmYes">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
