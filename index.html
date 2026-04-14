@@ -10,59 +10,168 @@
 
 <body>
 
-    <div class="app-shell">
+
+    <div class="tab-bar">
+        <button class="tab-btn active" data-tab="kalender">
+    <svg viewBox="0 0 24 24"><path d="M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V8H19V19Z"/></svg>
+    Kalender
+  </button>
+        <button class="tab-btn" data-tab="weton">
+    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/></svg>
+    Weton
+  </button>
+    </div>
+
+    <div class="tab-page active" id="tab-kalender">
+        <div class="app-shell">
 
 
-        <header class="header">
-            <div class="header-top">
-                <div>
-                    <div class="header-brand-title">Kalender Indonesia</div>
-                    <div class="header-brand-sub">Libur Nasional & Acara</div>
+            <header class="header">
+                <div class="header-top">
+                    <div>
+                        <div class="header-brand-title">Kalender 🇮🇩</div>
+                        <div class="header-brand-sub">Libur Nasional & Acara</div>
+                    </div>
+                    <button class="header-today-btn" id="todayBtn">Hari Ini</button>
                 </div>
-                <button class="header-today-btn" id="todayBtn">Hari Ini</button>
-            </div>
-
-
-            <div class="month-nav">
-                <button class="month-nav-btn" id="prevMonthBtn" aria-label="Bulan sebelumnya">
+                <div class="month-nav">
+                    <button class="month-nav-btn" id="prevMonthBtn" aria-label="Bulan sebelumnya">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
       </button>
-                <div class="month-nav-center">
-                    <div class="month-label" id="monthLabel">—</div>
-                    <div class="year-input-wrap">
-                        <input type="number" class="year-input" id="yearInput" min="1900" max="2100" aria-label="Tahun" />
-                        <button class="year-go-btn" id="goYearBtn">GO</button>
+                    <div class="month-nav-center">
+                        <div class="month-label" id="monthLabel">—</div>
+                        <div class="year-input-wrap">
+                            <input type="number" class="year-input" id="yearInput" min="1900" max="2100" aria-label="Tahun" />
+                            <button class="year-go-btn" id="goYearBtn">GO</button>
+                        </div>
                     </div>
-                </div>
-                <button class="month-nav-btn" id="nextMonthBtn" aria-label="Bulan berikutnya">
+                    <button class="month-nav-btn" id="nextMonthBtn" aria-label="Bulan berikutnya">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </button>
+                </div>
+            </header>
+
+            <div class="filter-row">
+                <div class="filter-pill on-holiday" id="pillHoliday" role="button" tabindex="0">
+                    <span class="pdot"></span> Libur Nasional
+                </div>
+                <div class="filter-pill on-event" id="pillEvent" role="button" tabindex="0">
+                    <span class="pdot"></span> Acara Saya
+                </div>
+                <div class="filter-pill on-weton" id="pillWeton" role="button" tabindex="0">
+                    <span class="pdot"></span> Weton
+                </div>
             </div>
-        </header>
 
 
-        <div class="filter-row">
-            <div class="filter-pill on-holiday" id="pillHoliday" role="button" tabindex="0">
-                <span class="pdot"></span> Libur Nasional
+            <div class="calendar-wrap" role="grid" aria-label="Kalender">
+                <div class="day-headers" id="dayHeaders"></div>
+                <div class="calendar-grid" id="calendarGrid" style="touch-action:pan-y;"></div>
             </div>
-            <div class="filter-pill on-event" id="pillEvent" role="button" tabindex="0">
-                <span class="pdot"></span> Acara Saya
-            </div>
+
+
+            <div class="info-panel hidden" id="infoPanel" aria-live="polite"></div>
+
+            <footer class="app-footer" id="appFooter"></footer>
         </div>
-
-
-        <div class="calendar-wrap" role="grid" aria-label="Kalender">
-            <div class="day-headers" id="dayHeaders"></div>
-            <div class="calendar-grid" id="calendarGrid" style="touch-action: pan-y;"></div>
-        </div>
-
-
-        <div class="info-panel hidden" id="infoPanel" aria-live="polite"></div>
-
-
-        <footer class="app-footer" id="appFooter"></footer>
-
     </div>
+
+
+
+    <div class="tab-page" id="tab-weton">
+        <div class="app-shell">
+
+            <header class="header" style="padding-bottom:16px;">
+                <div class="header-top">
+                    <div>
+                        <div class="header-brand-title">🔮 Weton Jawa</div>
+                        <div class="header-brand-sub">Primbon & Perhitungan Tradisional</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="weton-page">
+
+
+                <section class="weton-section">
+                    <div class="weton-section-title">📅 Kalkulator Weton</div>
+                    <div class="weton-section-desc">Masukkan tanggal lahir untuk mengetahui weton, neptu, dan watak.</div>
+                    <div class="weton-calc-form">
+                        <input type="date" class="form-input" id="wetonDateInput" />
+                        <button class="btn-primary" id="wetonCalcBtn" style="margin-top:0;width:auto;padding:11px 22px;">Hitung</button>
+                    </div>
+                    <div id="wetonResult" class="weton-result hidden"></div>
+                </section>
+
+
+                <section class="weton-section">
+                    <div class="weton-section-title">☀️ Weton Hari Ini</div>
+                    <div id="wetonHariIni" class="weton-hari-ini"></div>
+                </section>
+
+
+                <section class="weton-section">
+                    <div class="weton-section-title">📊 Tabel Nilai Neptu</div>
+                    <div class="weton-section-desc">Neptu adalah nilai numerik dari hari dan pasaran dalam tradisi Jawa.</div>
+                    <div class="neptu-grid">
+                        <div class="neptu-col">
+                            <div class="neptu-col-title">Hari</div>
+                            <div class="neptu-row"><span>Ahad (Minggu)</span><span class="neptu-val">5</span></div>
+                            <div class="neptu-row"><span>Senin</span><span class="neptu-val">4</span></div>
+                            <div class="neptu-row"><span>Selasa</span><span class="neptu-val">3</span></div>
+                            <div class="neptu-row"><span>Rabu</span><span class="neptu-val">7</span></div>
+                            <div class="neptu-row"><span>Kamis</span><span class="neptu-val">8</span></div>
+                            <div class="neptu-row"><span>Jumat</span><span class="neptu-val">6</span></div>
+                            <div class="neptu-row"><span>Sabtu</span><span class="neptu-val">9</span></div>
+                        </div>
+                        <div class="neptu-col">
+                            <div class="neptu-col-title">Pasaran</div>
+                            <div class="neptu-row"><span>Legi</span><span class="neptu-val">5</span></div>
+                            <div class="neptu-row"><span>Pahing</span><span class="neptu-val">9</span></div>
+                            <div class="neptu-row"><span>Pon</span><span class="neptu-val">7</span></div>
+                            <div class="neptu-row"><span>Wage</span><span class="neptu-val">4</span></div>
+                            <div class="neptu-row"><span>Kliwon</span><span class="neptu-val">8</span></div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="weton-section">
+                    <div class="weton-section-title">💑 Cek Kecocokan Weton</div>
+                    <div class="weton-section-desc">Hitung kecocokan dua weton berdasarkan perhitungan Primbon Jawa.</div>
+                    <div class="cocok-form">
+                        <div class="form-group">
+                            <label class="form-label">Tanggal Lahir Pertama</label>
+                            <input type="date" class="form-input" id="cocok1" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tanggal Lahir Kedua</label>
+                            <input type="date" class="form-input" id="cocok2" />
+                        </div>
+                        <button class="btn-primary" id="cocokBtn">Cek Kecocokan</button>
+                    </div>
+                    <div id="cocokResult" class="weton-result hidden"></div>
+                </section>
+
+
+                <section class="weton-section">
+                    <div class="weton-section-title">🌟 Hari Baik Bulan Ini</div>
+                    <div class="weton-section-desc">Hari dengan neptu baik untuk memulai sesuatu yang penting.</div>
+                    <div id="hariBaikList" class="hari-baik-list"></div>
+                </section>
+
+
+                <section class="weton-section">
+                    <div class="weton-section-title">🧭 Watak Berdasarkan Pasaran</div>
+                    <div class="watak-grid" id="watakGrid"></div>
+                </section>
+
+            </div>
+
+            <footer class="app-footer" style="margin-top:0;">&copy; <span id="wtYear"></span> Kalender Indonesia — Ahmad Ragiel Zaini</footer>
+        </div>
+    </div>
+
 
 
     <div class="bottom-area">
@@ -182,6 +291,17 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="wetonDetailModal" role="dialog" aria-modal="true">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-header">
+                <span class="modal-title">🔮 Detail Weton</span>
+                <button class="modal-close" data-close="wetonDetailModal" aria-label="Tutup">&times;</button>
+            </div>
+            <div class="modal-body" id="wetonDetailBody"></div>
+        </div>
+    </div>
+
 
     <div class="modal-overlay" id="confirmModal" role="alertdialog" aria-modal="true">
         <div class="modal-center">
@@ -197,7 +317,7 @@
         </div>
     </div>
 
-
+    <!-- Toast -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="main.js"></script>
